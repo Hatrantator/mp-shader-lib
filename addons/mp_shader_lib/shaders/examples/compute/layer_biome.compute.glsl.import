@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://ca8ajavp2tphh"
+path="res://.godot/imported/layer_biome.compute.glsl-0b5764a6bb635c70024848259382a681.res"
+
+[deps]
+
+source_file="res://addons/mp_shader_lib/shaders/examples/compute/layer_biome.compute.glsl"
+dest_files=["res://.godot/imported/layer_biome.compute.glsl-0b5764a6bb635c70024848259382a681.res"]
+
+[params]
+
