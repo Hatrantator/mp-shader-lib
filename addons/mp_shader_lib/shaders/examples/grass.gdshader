@@ -2,8 +2,8 @@
 shader_type spatial;
 render_mode cull_disabled, ensure_correct_normals;
 
-#include "res://addons/gd_shader_lib/shaders/includes/vertex_mask.gdshaderinc"
-#include "res://addons/gd_shader_lib/shaders/includes/hue_mask.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/vertex_mask.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/hue_mask.gdshaderinc"
 
 //these are global uniforms!
 uniform sampler2D we_height_map : filter_linear, repeat_enable;

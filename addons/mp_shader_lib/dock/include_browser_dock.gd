@@ -4,6 +4,8 @@ extends Control
 const ROOT := "res://addons/mp_shader_lib/shaders"
 const INCLUDE_ROOT := "res://addons/mp_shader_lib/shaders/includes"
 const TEMPLATE_ROOT := "res://addons/mp_shader_lib/shaders/templates"
+const CONFIG_FILE := "res://addons/mp_shader_lib/mpsl-config.cfg"
+const CONFIG_SECTION := "folders"
 const TEMPLATE_DATA := {
 	"NAME": "Name",
 	#"TYPE": "Spatial / CanvasItem / Compute",
@@ -15,8 +17,9 @@ const TEMPLATE_DATA := {
 
 @onready var tree := $Tree
 @onready var search_input: LineEdit = $HBoxContainer/LineEdit
-#@onready var editor_interface := EditorInterface.get_editor_interface()
 @onready var editor_theme: Theme = EditorInterface.get_editor_theme()
+@onready var add_folder_btn: Button = $HBoxContainer/AddFolderBtn
+@onready var folder_dialog: FileDialog = $EditorFileDialog
 
 @onready var rtl: RichTextLabel = $PanelContainer/RichTextLabel
 
@@ -25,6 +28,8 @@ const TEMPLATE_DATA := {
 var new_include_fields :Array[LineEdit]= []
 var cache_data := {}
 var _all_file_items: Array[TreeItem] = []
+var config := ConfigFile.new()
+var configured_folders: Array[String] = []
 
 @onready var context_menu := PopupMenu.new()
 @onready var shader_wizard: AcceptDialog = $ShaderWizard
@@ -38,7 +43,12 @@ func _ready():
 	_setup_popup()
 	_setup_create_include()
 	_setup_context_menu()
+	_setup_folder_dialog()
+	_load_config()
+	add_folder_btn.icon = _get_icon("Folder")
 	search_input.text_changed.connect(_on_search_text_changed)
+	rtl.meta_clicked.connect(_on_rtl_meta_clicked)
+	add_folder_btn.pressed.connect(_on_add_folder_btn_pressed)
 	_refresh_tree()
 
 func _refresh_tree():
@@ -46,6 +56,11 @@ func _refresh_tree():
 	tree.clear()
 	var root = tree.create_item()
 	_scan_directory(ROOT, root)
+	for folder_path in configured_folders:
+		var folder_item = tree.create_item(root)
+		folder_item.set_text(0, folder_path.get_file())
+		folder_item.set_icon(0, _get_icon("Folder"))
+		_scan_directory(folder_path, folder_item)
 
 func _on_search_text_changed(text: String) -> void:
 	if text.is_empty():
@@ -136,6 +151,31 @@ func create_include_from_template(template_path: String, target_path: String, da
 func _setup_popup() -> void:
 	popup_menu.visible = false
 
+func _setup_folder_dialog() -> void:
+	folder_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_DIR
+	folder_dialog.access = EditorFileDialog.ACCESS_FILESYSTEM
+	folder_dialog.dir_selected.connect(_on_folder_selected)
+
+func _load_config() -> void:
+	var err := config.load(CONFIG_FILE)
+	if err != OK:
+		config.set_value(CONFIG_SECTION, "paths", [])
+		config.save(CONFIG_FILE)
+	configured_folders = config.get_value(CONFIG_SECTION, "paths", [])
+
+func _save_config() -> void:
+	config.set_value(CONFIG_SECTION, "paths", configured_folders)
+	config.save(CONFIG_FILE)
+
+func _on_folder_selected(path: String) -> void:
+	if path not in configured_folders:
+		configured_folders.append(path)
+		_save_config()
+		_refresh_tree()
+
+func _on_add_folder_btn_pressed() -> void:
+	folder_dialog.popup_centered_clamped()
+
 func _setup_context_menu() -> void:
 	add_child(context_menu)
 	context_menu.add_item("Copy path", 0)
@@ -176,7 +216,10 @@ func _on_tree_item_selected() -> void:
 		if deps.size() > 0:
 			rtl.text += "\n[b][color=orange]@dependencies:[/color][/b]\n"
 			for d in deps:
-				rtl.text += "• " + d + "\n"
+				var dep_path := d.strip_edges().trim_prefix("\"").trim_suffix("\"")
+				var full_path := INCLUDE_ROOT + "/" + dep_path
+				var display_name := dep_path.get_file()
+				rtl.text += "• [url=" + dep_path + "]" + display_name + "[/url]\n"
 		
 		var uniforms :PackedStringArray = parse_data["uniforms"]
 		if uniforms.size() > 0:
@@ -198,6 +241,7 @@ func _on_tree_item_activated() -> void:
 	
 	var meta = item.get_metadata(0)
 	if meta != null:
+		print(meta)
 		var resource := load(meta)
 		EditorInterface.edit_resource(resource)
 
@@ -255,3 +299,10 @@ func _on_accept_dialog_confirmed() -> void:
 	await create_include_from_template(template_file, INCLUDE_ROOT+"/"+cache_data["NAME"]+suffix, cache_data)
 	popup_menu.visible = false
 	_refresh_tree()
+
+
+func _on_rtl_meta_clicked(meta: String) -> void:
+	print(meta)
+	var res := load(meta)
+	if res:
+		EditorInterface.edit_resource(res)

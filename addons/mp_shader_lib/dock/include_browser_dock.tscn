@@ -1,7 +1,17 @@
 [gd_scene format=3 uid="uid://1o6cff5paa20"]
 
-[ext_resource type="Script" uid="uid://0f1c1uhn7m0j" path="res://addons/gd_shader_lib/dock/include_browser_dock.gd" id="1_l26uf"]
-[ext_resource type="PackedScene" uid="uid://bma1yxr7wf08v" path="res://addons/gd_shader_lib/dock/shader_wizard.tscn" id="2_k1h4n"]
+[ext_resource type="Script" uid="uid://0f1c1uhn7m0j" path="res://addons/mp_shader_lib/dock/include_browser_dock.gd" id="1_l26uf"]
+[ext_resource type="PackedScene" uid="uid://bma1yxr7wf08v" path="res://addons/mp_shader_lib/dock/shader_wizard.tscn" id="2_k1h4n"]
+
+[sub_resource type="DPITexture" id="DPITexture_l2k0e"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M2 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-4a1 1 0 0 1-1-1V3a1 1 0 0 0-1-1z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
 
 [node name="IncludeBrowserDock" type="VBoxContainer" unique_id=1369443589]
 anchors_preset = 15
@@ -26,6 +36,10 @@ placeholder_text = "Search includes..."
 [node name="NewBtn" type="Button" parent="HBoxContainer" unique_id=1673532331]
 layout_mode = 2
 text = "New Include"
+
+[node name="AddFolderBtn" type="Button" parent="HBoxContainer" unique_id=1093943229]
+layout_mode = 2
+icon = SubResource("DPITexture_l2k0e")
 
 [node name="PopupMenu" type="PanelContainer" parent="." unique_id=881997745]
 visible = false
@@ -88,6 +102,11 @@ popup/item_1/text = "CanvasItem"
 popup/item_1/id = 1
 popup/item_2/text = "Compute"
 popup/item_2/id = 2
+
+[node name="EditorFileDialog" type="FileDialog" parent="." unique_id=545755663]
+title = "Open a Directory"
+file_mode = 2
+access = 2
 
 [connection signal="pressed" from="HBoxContainer/NewBtn" to="." method="_on_new_btn_pressed"]
 [connection signal="pressed" from="PopupMenu/ScrollContainer/Inputs/CreateBtn" to="." method="_on_create_pressed"]

@@ -1,4 +1,5 @@
 // @name procedural
+// @WARNING This file is too large (100 lines). Consider splitting into specialized noise includes: procedural_perlin, procedural_worley, procedural_voronoi. Also has duplicate modulo function.
 // @category Other
 // @type Spatial
 // @description Procedural Generated

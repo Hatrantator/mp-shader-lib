@@ -1,9 +1,9 @@
 shader_type spatial;
 render_mode world_vertex_coords, cull_disabled, depth_prepass_alpha;// vertex_lighting;
 
-#include "res://addons/gd_shader_lib/shaders/includes/fresnel_modifier.gdshaderinc"
-#include "res://addons/gd_shader_lib/shaders/includes/hue_mask.gdshaderinc"
-#include "res://addons/gd_shader_lib/shaders/includes/vertex_mask.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/fresnel_modifier.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/hue_mask.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/vertex_mask.gdshaderinc"
 
 
 // tex

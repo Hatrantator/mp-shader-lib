@@ -25,7 +25,7 @@ func execute_biome_compute() -> void:
 	stop_watch.measure_msecs("layer biome execution total")
 	stop_watch.measure_msecs("layer biome compute execution")
 	
-	var compute_shader := ComputeHelper.create('res://addons/gd_shader_lib/shaders/examples/compute/layer_biome.compute.glsl')
+	var compute_shader := ComputeHelper.create('res://addons/mp_shader_lib/shaders/examples/compute/layer_biome.compute.glsl')
 	
 	var temperature_image := temperature.get_image()
 	temperature_image.convert(Image.FORMAT_RGBA8)
@@ -65,7 +65,7 @@ func execute_biome_compute() -> void:
 	var new_img = biome_out_texture.get_image()
 	#print(new_img.get_size())
 	biome_image.convert(Image.FORMAT_RGBAF)
-	new_img.save_png("res://addons/gd_shader_lib/shaders/examples/compute/output/layer_biome_out.png")
+	new_img.save_png("res://addons/mp_shader_lib/shaders/examples/compute/output/layer_biome_out.png")
 	var new_tex = ImageTexture.create_from_image(new_img)
 	texture_rect.texture = new_tex
 	biome_texture = new_tex

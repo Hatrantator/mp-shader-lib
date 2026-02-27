@@ -1,8 +1,8 @@
 shader_type spatial;
 
-#include "res://addons/gd_shader_lib/shaders/includes/color_modifier.gdshaderinc"
-#include "res://addons/gd_shader_lib/shaders/includes/fresnel_modifier.gdshaderinc"
-#include "res://addons/gd_shader_lib/shaders/includes/quadoffset_modifier.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/color_modifier.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/fresnel_modifier.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/quadoffset_modifier.gdshaderinc"
 
 void fragment() {
 	//includes color modifier effect

@@ -1,7 +1,7 @@
 shader_type spatial;
 render_mode world_vertex_coords, ensure_correct_normals;
 
-#include "res://addons/gd_shader_lib/shaders/includes/hue_mask.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/hue_mask.gdshaderinc"
 
 uniform sampler2D tex_x;
 uniform sampler2D tex_y;

@@ -1,7 +1,7 @@
 shader_type spatial;
 render_mode shadows_disabled;
 
-#include "res://addons/gd_shader_lib/shaders/includes/vertex_mask.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/vertex_mask.gdshaderinc"
 
 #define CAUSTICS
 #define FRESNEL

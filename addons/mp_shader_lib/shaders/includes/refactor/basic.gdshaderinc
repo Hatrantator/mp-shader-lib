@@ -1,4 +1,5 @@
 // @name Basic
+// @WARNING Very small file (14 lines). The hash33 function could be merged into procedural.gdshaderinc as it serves a similar pseudo-random purpose.
 // @category Other
 // @type Spatial
 // @description Basic Operations needed wherever

@@ -1,9 +1,9 @@
 shader_type spatial;
 render_mode blend_mix, depth_draw_opaque,cull_disabled;
 
-#include "res://addons/gd_shader_lib/shaders/includes/color_modifier.gdshaderinc"
-#include "res://addons/gd_shader_lib/shaders/includes/fresnel_modifier.gdshaderinc"
-#include "res://addons/gd_shader_lib/shaders/includes/quadoffset_modifier.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/color_modifier.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/fresnel_modifier.gdshaderinc"
+#include "res://addons/mp_shader_lib/shaders/includes/quadoffset_modifier.gdshaderinc"
 
 uniform sampler2D alphaTexture;
 uniform vec4 alphaTextureColor : source_color;
