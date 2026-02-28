@@ -29,7 +29,7 @@ var new_include_fields :Array[LineEdit]= []
 var cache_data := {}
 var _all_file_items: Array[TreeItem] = []
 var config := ConfigFile.new()
-var configured_folders: Array[String] = []
+var configured_folders: Array = []
 
 @onready var context_menu := PopupMenu.new()
 @onready var shader_wizard: AcceptDialog = $ShaderWizard
